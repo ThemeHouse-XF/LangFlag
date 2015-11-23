@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="ThemeHouse_LangFlag" title="[⌂] Language Flags" version_string="1.0.0" version_id="1447261019" url="http://xf.themehouse.io" install_callback_class="ThemeHouse_Install" install_callback_method="install" uninstall_callback_class="ThemeHouse_Install" uninstall_callback_method="uninstall">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="th_language_edit_langflag"><![CDATA[	<xen:textboxunit label="{xen:phrase th_flag_image_url_langflag}:" name="flag_url" value="{$language.flag_url}" />
+]]></template>
+  </admin_templates>
+  <admin_template_modifications>
+    <modification template="language_edit" modification_key="th_languageEdit_langFlag" description="Adds language flag URL input to language editor." execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#<fieldset>\s*<xen:radiounit name="time_format".*</fieldset>#Us]]></find>
+      <replace><![CDATA[${0}
+<xen:include template="th_language_edit_langflag" />]]></replace>
+    </modification>
+  </admin_template_modifications>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="controller_pre_dispatch" execute_order="10" callback_class="ThemeHouse_Listener_ControllerPreDispatch" callback_method="controllerPreDispatch" active="1" hint="" description=""/>
+    <listener event_id="file_health_check" execute_order="10" callback_class="ThemeHouse_LangFlag_Listener_FileHealthCheck" callback_method="fileHealthCheck" active="1" hint="" description=""/>
+    <listener event_id="init_dependencies" execute_order="10" callback_class="ThemeHouse_Listener_InitDependencies" callback_method="initDependencies" active="1" hint="" description=""/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_LangFlag_Listener_LoadClass" callback_method="loadClassController" active="0" hint="XenForo_ControllerAdmin_Language" description="XenForo_ControllerAdmin_Language (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_LangFlag_Listener_LoadClass" callback_method="loadClassDataWriter" active="0" hint="XenForo_DataWriter_Language" description="XenForo_DataWriter_Language (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="ThemeHouse_LangFlag_Listener_LoadClass" callback_method="loadClassController" active="1" hint="" description="(For XenForo 1.1 and below)" compatibility_switch="1"/>
+    <listener event_id="load_class_datawriter" execute_order="10" callback_class="ThemeHouse_LangFlag_Listener_LoadClass" callback_method="loadClassDataWriter" active="1" hint="" description="(For XenForo 1.1 and below)" compatibility_switch="1"/>
+    <listener event_id="template_create" execute_order="10" callback_class="ThemeHouse_LangFlag_Listener_TemplateCreate" callback_method="templateCreate" active="1" hint="" description="(For XenForo 1.1 and below)" compatibility_switch="1"/>
+    <listener event_id="template_post_render" execute_order="10" callback_class="ThemeHouse_LangFlag_Listener_TemplatePostRender" callback_method="templatePostRender" active="1" hint="" description="(For XenForo 1.1 and below)" compatibility_switch="1"/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups/>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="th_flag_image_url_langflag" version_id="0" version_string="1.0.0"><![CDATA[Flag Image URL]]></phrase>
+  </phrases>
+  <route_prefixes/>
+  <style_properties/>
+  <templates>
+    <template title="th_language_chooser_langflag" version_id="0" version_string="1.0.0"><![CDATA[<xen:if is="{$language.flag_url}"><img src="{$language.flag_url}"/></xen:if>]]></template>
+  </templates>
+  <public_template_modifications>
+    <modification template="footer" modification_key="th_copyrightNotice_langFlag" description="Copyright notice for [⌂] Language Flags" execution_order="1" enabled="1" action="callback">
+      <find><![CDATA[/{xen:phrase (?:xenforo|extra)_copyright}/]]></find>
+      <replace><![CDATA[ThemeHouse_Listener_InitDependencies::copyrightNotice]]></replace>
+    </modification>
+    <modification template="language_chooser" modification_key="th_languageChooser_langFlag" description="Adds language flags to language chooser." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<li><a href="{xen:link 'misc/language', '', 'language_id={$language.language_id}', '_xfToken={$visitor.csrf_token_page}', 'redirect={$redirect}'}">]]></find>
+      <replace><![CDATA[<li><a href="{xen:link 'misc/language', '', 'language_id={$language.language_id}', '_xfToken={$visitor.csrf_token_page}', 'redirect={$redirect}'}"><xen:include template="th_language_chooser_langflag" />]]></replace>
+    </modification>
+  </public_template_modifications>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
